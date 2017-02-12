@@ -1,0 +1,22 @@
+{% extends 'product/main.html' %}
+
+{% block last_added %}
+{% if username %}
+    {% if last_added_pr %}
+        <ul>
+        {% for product in last_added_pr %}
+            <li><a class="button secondary" href="/products/last_added/{{ product.slug }}/">{{ product.name }}</a></li>
+
+            <ul>
+                <li><h6>{{ product.description }}</h6></li>
+                <li><h6>Price: ${{ product.price }}</h6></li>
+            </ul>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No items are available.</p>
+    {% endif %}
+{% else %}
+    <p>If you want to watch this page, you need login.</p>
+{% endif %}
+{% endblock %}

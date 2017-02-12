@@ -1,0 +1,16 @@
+{% extends 'product/main.html' %}
+
+{% block category_slug %}
+{% if product_category_all %}
+    {% for product in product_category_all %}
+        <ul><li><a class="button secondary" href="/products/{{ product.category.slug }}/{{ product.slug }}">{{ product.name }}</a></li>
+            <ul>
+                <li><h6>{{ product.description }}</h6></li>
+                <li><h6>Price: ${{ product.price }}</h6></li>
+            </ul>
+        </ul>
+    {% endfor %}
+{% else %}
+    <p>No items are available.</p>
+{% endif %}
+{% endblock %}

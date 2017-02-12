@@ -1,0 +1,13 @@
+{% extends 'product/main.html' %}
+
+{% block product_slug %}
+{% if product_only %}
+     <ul>
+         <li><h4 class="button secondary">{{ product_only.name }}</h4></li>
+         <ul><li><h6>{{ product_only.description }}</h6></li></ul>
+         <ul><li><h6>Price: ${{ product_only.price }}</h6></li></ul>
+     </ul>
+{% else %}
+    <p>No items are available.</p>
+{% endif %}
+{% endblock %}

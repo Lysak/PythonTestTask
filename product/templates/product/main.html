@@ -1,0 +1,39 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Django</title>
+    <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css" %}">
+    <link rel="shortcut icon" href="{% static 'l.ico' %}" type="ico" />
+</head>
+<body>
+<style type="text/css">
+body {
+    background: white url("{% static 'images/background.jpg' %}") no-repeat right bottom;
+    background-size: 550px auto;
+}
+</style>
+<div class="top-bar">
+    <section class="top-bar-section">
+        <ul class="right">
+            {% if username %}
+                <li><a href="/auth/logout/">Logout ({{ username }})</a></li>
+            {% else %}
+                <li><a href="/auth/login/">Login</a></li>
+            {% endif %}
+        </ul>
+    </section>
+</div>
+<h1><a href="/products/">Product App</a></h1>
+<br>
+<br>
+<div class="row">
+{% block login %}{% endblock %}
+{% block products %}{% endblock %}
+{% block last_added %}{% endblock %}
+{% block category_slug %}{% endblock %}
+{% block product_slug %}{% endblock %}
+</div>
+</body>
+</html>
