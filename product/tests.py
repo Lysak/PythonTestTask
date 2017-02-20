@@ -18,8 +18,8 @@ class BasicTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_get_product_view(self):
-        products_for_test = Product.objects.create(name='product', description='prod_desc', created_at=timezone.now(),
-                                                   price=30, slug='product_slug')
+        products_for_test = Product.objects.create(name='product', description='prod_desc',
+                                                   created_at=timezone.now(), price=30, slug='product_slug')
         # product created
         self.assertEqual(products_for_test.pk, 1)
 

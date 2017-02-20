@@ -26,7 +26,7 @@ class CategorySlugListView(generic.ListView):
     model = Product
 
     def get_queryset(self):
-        return self.model.objects.filter(category__slug=self.kwargs.get('slug'), created_at__lte=timezone.now())
+        return self.model.objects.filter(category__slug=self.kwargs.get('slug'))
         # users don't know about hidden products
 
     def get_context_data(self, **kwargs):
@@ -53,10 +53,10 @@ class LastAddedListView(generic.ListView):
     template_name = 'product/last_added.html'
     context_object_name = 'last_added_pr'
     model = Product
-    time_threshold = timezone.now() - datetime.timedelta(days=9)
 
     def get_queryset(self):
-        return self.model.objects.filter(created_at__gte=self.time_threshold, created_at__lte=timezone.now())
+        time_threshold = timezone.now() - datetime.timedelta(days=1)
+        return self.model.objects.filter(created_at__gte=time_threshold, created_at__lte=timezone.now())
 
     def get_context_data(self, **kwargs):
         context = super(LastAddedListView, self).get_context_data(**kwargs)
