@@ -26,7 +26,7 @@ class CategorySlugListView(generic.ListView):
     model = Product
 
     def get_queryset(self):
-        return self.model.objects.filter(category__slug=self.kwargs.get('slug'))
+        return self.model.objects.filter(category__slug=self.kwargs.get('slug'), created_at__lte=timezone.now())
         # users don't know about hidden products
 
     def get_context_data(self, **kwargs):
