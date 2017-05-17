@@ -1,22 +1,51 @@
 {% extends 'product/main.html' %}
+{% load static %}
 
 {% block last_added %}
 {% if username %}
     {% if last_added_pr %}
         <ul>
         {% for product in last_added_pr %}
-            <li><a class="button secondary" href="/products/last_added/{{ product.slug }}/">{{ product.name }}</a></li>
-
+            <li><a href="/products/last_added/{{ product.slug }}/">{{ product.name }}</a></li>
             <ul>
                 <li><h6>{{ product.description }}</h6></li>
                 <li><h6>Price: ${{ product.price }}</h6></li>
             </ul>
+            <p><a href="/products/addlike/{{ product.id }}/"><img src="{% static "images.jpg" %}" width="25px" height="25px"></a> {{ product.liked_by.count }}</p>
         {% endfor %}
         </ul>
     {% else %}
         <p>No items are available.</p>
     {% endif %}
+<div class="row">
+    <div class="large-3 large-offset-5 columns">
+        <ul class="pagination">
+            {% if is_paginated %}
+            <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="arrow"><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+            <li class="arrow unavailable"><a href="">&laquo;</a></li>
+            {% endif %}
+            {% for page in page_obj.paginator.page_range %}
+                {% if page == page_obj.number %}
+                    <li class="current"><a href="?page={{ page }}">{{ page }}</a></li>
+                {% else %}
+                    <li><a href="?page={{ page }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="arrow"><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="arrow unavailable"><a href="">&raquo;</a></li>
+            {% endif %}
+            </ul>
+            {% endif %}
+        </ul>
+    </div>
+</div>
 {% else %}
     <p>If you want to watch this page, you need login.</p>
 {% endif %}
+
 {% endblock %}

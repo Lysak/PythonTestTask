@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
 from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm
@@ -26,7 +26,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('/products/')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def register(request):
@@ -40,7 +40,7 @@ def register(request):
             newuser = auth.authenticate(username=newuser_form.cleaned_data['username'],
                                         password=newuser_form.cleaned_data['password2'])
             auth.login(request, newuser)
-            return redirect('/product/')
+            return redirect('/products/')
         else:
             args['form'] = newuser_form
     return render_to_response('product/register.html', args)

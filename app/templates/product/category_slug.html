@@ -1,16 +1,54 @@
 {% extends 'product/main.html' %}
-
+{% load static %}
 {% block category_slug %}
 {% if product_category_all %}
+    {% for page in page_obj.paginator.page_range %}
+        {% if page == page_obj.number %}
+            <div id="sort">
+                <a href="?page={{ page }}&sort=liked_by">Likes ASC</a> <a href="?page={{ page }}&sort=-liked_by">Likes DESC</a>
+            </div>
+        {% endif %}
+    {% endfor %}
     {% for product in product_category_all %}
-        <ul><li><a class="button secondary" href="/products/{{ product.category.slug }}/{{ product.slug }}">{{ product.name }}</a></li>
+        <div class="prod list">
+            <ul>
+            <li><a href="/products/{{ product.category.slug }}/{{ product.slug }}">{{ product.name }}</a></li>
             <ul>
                 <li><h6>{{ product.description }}</h6></li>
                 <li><h6>Price: ${{ product.price }}</h6></li>
             </ul>
-        </ul>
+            <p><a href="/products/addlike/{{ product.id }}/"><img src="{% static "images.jpg" %}" width="25px" height="25px"></a> {{ product.liked_by.count }}</p>
+            </ul>
+        </div>
     {% endfor %}
 {% else %}
     <p>No items are available.</p>
 {% endif %}
+<div class="row">
+    <div class="large-3 large-offset-5 columns">
+        <ul>
+            {% if is_paginated %}
+            <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="arrow"><a href="?page={{ page_obj.previous_page_number }}&sort={{ sort }}">&laquo;</a></li>
+            {% else %}
+            <li class="arrow unavailable"><a href="">&laquo;</a></li>
+            {% endif %}
+            {% for page in page_obj.paginator.page_range %}
+                {% if page == page_obj.number %}
+                    <li class="current"><a href="?page={{ page }}&sort={{ sort }}">{{ page }}</a></li>
+                {% else %}
+                    <li><a href="?page={{ page }}&sort={{ sort }}">{{ page }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="arrow"><a href="?page={{ page_obj.next_page_number }}&sort={{ sort }}">&raquo;</a></li>
+            {% else %}
+                <li class="arrow unavailable"><a href="">&raquo;</a></li>
+            {% endif %}
+            </ul>
+            {% endif %}
+        </ul>
+    </div>
+</div>
 {% endblock %}

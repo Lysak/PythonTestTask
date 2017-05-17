@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Django</title>
     <link rel="stylesheet" type="text/css" href="{% static "css/foundation.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
     <link rel="shortcut icon" href="{% static 'l.ico' %}" type="ico" />
 </head>
 <body>
@@ -26,14 +27,22 @@ body {
     </section>
 </div>
 <h1><a href="/products/">Product App</a></h1>
-<br>
-<br>
 <div class="row">
 {% block login %}{% endblock %}
 {% block products %}{% endblock %}
 {% block last_added %}{% endblock %}
 {% block category_slug %}{% endblock %}
 {% block product_slug %}{% endblock %}
+{% if messages %}
+<!-- Alerts -->
+<div class="messages">
+    {% for message in messages %}
+    <div>
+        <button class="del-msg"><strong>{{ message }}</strong></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 </div>
 </body>
 </html>

@@ -1,15 +1,21 @@
 {% extends 'product/main.html' %}
 
 {% block products %}
+<div class="large-8 columns">
 {% if category_all %}
-    <ul>
-    <li><h3><a class="button secondary" href="/products/last_added/">Latest Added Products</a></h3></li>
-    <br>
-    {% for product in category_all %}
-        <li><h3><a class="button secondary" href="/products/{{ product.slug }}/">{{ product.name }}</a></h3></li>
-        <ul><li><h6>{{ product.description }}</h6></li></ul>
-    {% endfor %}
-    </ul>
+    <div class="prod">
+        <ul>
+            <br>
+            <li><h3><a href="/products/last_added/">Latest Added Products</a></h3></li>
+            <br>
+            {% for product in category_all %}
+                <li><h3><a href="/products/{{ product.slug }}/">{{ product.name }}</a></h3></li>
+                <ul><li><h6>{{ product.description }}</h6></li></ul>
+
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% else %}
     <p>No items are available.</p>
 {% endif %}

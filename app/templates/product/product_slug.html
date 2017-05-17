@@ -1,13 +1,35 @@
 {% extends 'product/main.html' %}
+{% load static %}
 
 {% block product_slug %}
+<div class="large-7 columns">
 {% if product_only %}
-     <ul>
-         <li><h4 class="button secondary">{{ product_only.name }}</h4></li>
+     <div class="prod">
+        <ul>
+         <li><h4>{{ product_only.name }}</h4></li>
          <ul><li><h6>{{ product_only.description }}</h6></li></ul>
          <ul><li><h6>Price: ${{ product_only.price }}</h6></li></ul>
-     </ul>
+         <p><a href="/products/addlike/{{ product_only.id }}/">
+             <img src="{% static "images.jpg" %}" width="25px" height="25px"></a> {{ product_only.liked_by.count }}</p>
+        </ul>
+    </div>
+    <p><b>Comments:</b></p>
+    {% for comment in comments %}
+        <div class="prod">
+            <p>{{ comment.comments_text }}</p>
+            <p>{{ comment.created_at }}</p>
+        </div>
+    {% endfor %}
+    {% if username %}
+    <hr>
+    <form action="/products/addcomment/{{ product_only.id }}/" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" class="button" value="Add Comment">
+    </form>
+    {% endif %}
 {% else %}
     <p>No items are available.</p>
 {% endif %}
+</div>
 {% endblock %}

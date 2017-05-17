@@ -1,2 +1,10 @@
 # -*- coding: utf-8 -*-
-__author__ = 'lysak'
+from django.forms import ModelForm
+from .models import Comment
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        # fields = "__all__"
+        exclude = ['comments']
